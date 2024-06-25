@@ -1,5 +1,4 @@
-package domain;
-
+package org.example.blog.domain;
 
 import jakarta.persistence.*;
 
@@ -13,20 +12,20 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 255)
+    @Column(name = "title", nullable = false, length = 255)
     private String title;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(name = "content", columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime created_date = LocalDateTime.now();
+    @Column(name = "created_date", nullable = false, updatable = false)
+    private LocalDateTime createdDate = LocalDateTime.now();
 
-    @Column(nullable = false)
-    private LocalDateTime updated_date = LocalDateTime.now();
+    @Column(name = "updated_date", nullable = false)
+    private LocalDateTime updatedDate = LocalDateTime.now();
 
-    @Column(nullable = false)
-    private Boolean is_published = false;
+    @Column(name = "is_published", nullable = false)
+    private Boolean published = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -35,5 +34,4 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 
-    // Getters and Setters
 }

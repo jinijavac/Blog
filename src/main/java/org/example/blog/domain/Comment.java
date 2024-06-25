@@ -1,4 +1,4 @@
-package domain;
+package org.example.blog.domain;
 
 
 import jakarta.persistence.*;
@@ -12,11 +12,11 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(name = "content", columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime created_date = LocalDateTime.now();
+    @Column(name = "created_date", nullable = false, updatable = false)
+    private LocalDateTime createdDate = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -26,5 +26,4 @@ public class Comment {
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    // Getters and Setters
 }

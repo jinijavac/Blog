@@ -1,2 +1,13 @@
-package org.example.blog.Repository;public class UserRepository {
+package org.example.blog.Repository;
+
+import org.example.blog.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+
+    boolean existsByUsername(String username);
+
+    boolean existsByEmail(String email);
 }

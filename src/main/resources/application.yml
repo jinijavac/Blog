@@ -10,9 +10,9 @@ spring:
     password: root1234
   jpa:
     hibernate:
-      ddl-auto: create
-    show-sql: true
+      ddl-auto: update
     properties:
       hibernate:
+        #show_sql: true
         format_sql: true
 

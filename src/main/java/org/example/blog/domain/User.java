@@ -1,9 +1,12 @@
-package domain;
+package org.example.blog.domain;
 
 import jakarta.persistence.*;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -11,34 +14,36 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 255)
+    @Column(name = "username", nullable = false, unique = true, length = 255)
     private String username;
 
-    @Column(nullable = false, unique = true, length = 255)
+    @Column(name = "email", nullable = false, unique = true, length = 255)
     private String email;
 
-    @Column(nullable = false, length = 255)
+    @Column(name = "password", nullable = false, length = 255)
     private String password;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime registration_date = LocalDateTime.now();
+    @Column(name = "registration_date", nullable = false, updatable = false)
+    private LocalDateTime registrationDate = LocalDateTime.now();
 
-    @Column(length = 255)
-    private String profile_image;
+    @Column(name = "profile_image", length = 255)
+    private String profileImage;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "bio", columnDefinition = "TEXT")
     private String bio;
 
-    @Column(length = 255)
-    private String blog_title;
+    @Column(name = "blog_title", length = 255)
+    private String blogTitle;
 
-    @Column(nullable = false)
-    private Boolean email_notification = false;
+    @Column(name = "email_notification", nullable = false)
+    private Boolean emailNotification = false;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts;
@@ -46,12 +51,12 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 
-    @ManyToMany
+    //다대다 중간 테이블 생성
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> roles;
 }
-
