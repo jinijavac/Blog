@@ -18,22 +18,24 @@ public class UserService {
 
 
     @Transactional
-    public User registerUser(User user) {
-        // 사용자 정보 등록
-        Role roleUser = roleRepository.findByName("ROLE_USER");
-        user.setRoles(Collections.singleton(roleUser));
-        return userRepository.save(user);
+    public User saveUser(User user) {
+        try {
+            Role roleUser = roleRepository.findByName("ROLE_USER");
+            user.setRoles(Collections.singleton(roleUser));
+            System.out.println("Saving user: " + user);
+            return userRepository.save(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("사용자 등록 중 오류가 발생했습니다.");
+        }
     }
 
-    // 유저네임으로 사용자가 이미 존재하는지 확인
     public boolean existsByUsername(String username) {
         return userRepository.existsByUsername(username);
     }
 
-    // 이메일로 사용자가 이미 존재하는지 확인
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
-
-
 }
+
