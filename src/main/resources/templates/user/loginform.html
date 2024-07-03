@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 <head>
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
@@ -9,17 +9,33 @@
 <body>
 
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-  <a class="navbar-brand" href="/">홈</a>
+  <a class="navbar-brand" href="/static">홈</a>
+  <!--    href : 링크-->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="/loginform">로그인</a>
+      <li class="nav-item" sec:authorize="isAnonymous()">
+        <a class="nav-link" href="/auth/loginform">로그인</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/joinform">회원가입</a>
+      <li class="nav-item" sec:authorize="isAnonymous()">
+        <a class="nav-link" href="/auth/joinform">회원가입</a>
+      </li>
+
+      <li class="nav-item" sec:authorize="isAuthenticated()">
+        <a class="nav-link" href="/board/form">글 작성</a>
+      </li>
+      <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+        <a class="nav-link dropdown-toggle" href="#" id="user-name" data-toggle="dropdown" sec:authentication="name">
+          사용자 이름
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/user/form">설정</a>
+          <a class="dropdown-item" href="#">블로그 이동</a>
+          <a class="dropdown-item" href="#">임시저장글 목록 보기</a>
+          <a class="dropdown-item" href="/logout">로그아웃</a>
+        </div>
       </li>
     </ul>
   </div>
@@ -28,23 +44,17 @@
 
 <div class="container">
   <h2>로그인</h2>
-  <form>
+  <form action="/auth/login" method="post">
     <div class="form-group">
-      <label for="email">Email:</label>
+      <label for="username">Username:</label>
       <div class="input-group">
-        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
-        <div class="input-group-append"></div>
+        <input type="text" name="username" class="form-control" id="username" placeholder="Enter username ">
       </div>
-      <span id="email-msg"></span>
+      <span id="username-msg"></span>
     </div>
     <div class="form-group">
       <label for="password">Password:</label>
-      <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
-    </div>
-    <div class="form-group form-check">
-      <label class="form-check-label">
-        <input class="form-check-input" type="checkbox"> Remember me
-      </label>
+      <input type="password" name="password" class="form-control" id="password" placeholder="Enter password" >
     </div>
     <button type = "submit" class="btn btn-primary">로그인</button>
   </form>

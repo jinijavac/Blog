@@ -52,7 +52,7 @@ public class User {
     private List<Comment> comments;
 
     //다대다 중간 테이블 생성
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

@@ -14,16 +14,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
-@RequestMapping("/blog")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/joinform")
+    @GetMapping("/auth/joinform")
     public String joinform() {
         return "user/joinform";
     }
-    @GetMapping("/loginform")
+    @GetMapping("/auth/loginform")
     public String loginform() {
         return "user/loginform";
 
