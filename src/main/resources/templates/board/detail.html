@@ -5,6 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+
+
 </head>
 <body>
 
@@ -40,17 +44,32 @@
         </ul>
     </div>
 </nav>
-<br>
 
-<div class="container" th:each="post : ${latestposts}">
-    <div class="card m-2">
-        <div class="card-body">
-            <h4 class="card-title" th:text="${post.title}"></h4>
-            <p class="card-text" th:utext="${post.content}"></p>
-            <a th:href="@{/board/{id}(id=${post.id})}" class="btn btn-primary">상세 보기</a>
+<div class="container">
+    <form>
+<!--        <button class="btn btn-secondary" onclick="history.back()">홈</button>-->
+        <button id ="btn-update" class="btn btn-warning">수정</button>
+        <button id="btn-delete" class="btn btn-danger" th:if="${#authentication.principal.username == post.user.username}">삭제</button>
+
+        <br/><br/>
+
+        <div>
+            글 번호 : <span id="id"><i th:text="${post.id}"></i> </span>
+            작성자 : <span><i th:text="${post.user.username}"></i> </span>
         </div>
-    </div>
+        <br/>
+        <div>
+            <h3 th:text="${post.title}"></h3>
+        </div>
+        <hr>
+        <div>
+            <div th:utext="${post.content}">
+            </div>
+        </div>
+
+    </form>
 </div>
+
 
 
 <div class="jumbotron text-center" style="margin-bottom:0">
@@ -58,9 +77,42 @@
     <p>010-5408-7492</p>
     <p>충청남도 천안시 XX동</p>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<script>
+    let index = {
+        init: function () {
+            $("#btn-delete").on("click", () => {
+                this.deleteById();
+            });
+        },
+        deleteById: function () {
+            let id = $("#id").text(); // 이 부분에서 id 값을 올바르게 가져오는지 확인
+
+
+            $.ajax({
+
+                type: "DELETE",
+                url: "/api/board/"+ id
+            })
+                .done(function (response) {
+                    alert(response); // 서버에서 반환한 메시지를 알림창으로 표시
+                    location.href = "/"; // 성공 시 메인 페이지로 이동
+                })
+                .fail(function (error) {
+                    if (error.status === 500) {
+                        alert("서버 오류가 발생했습니다."); // 서버 오류 처리
+                    } else {
+                        alert("오류가 발생했습니다: " + error.responseText); // 기타 오류 처리
+                    }
+                });
+        }
+    };
+
+    index.init();
+
+</script>
 </body>
 </html>

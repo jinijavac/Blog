@@ -1,5 +1,6 @@
 package org.example.blog.security;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.example.blog.Repository.UserRepository;
 import org.example.blog.domain.User;
@@ -13,18 +14,15 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CustomeDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final HttpSession session;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if(user == null){
-            throw new UsernameNotFoundException("사용자가 없습니다.");
-        }
-        org.springframework.security.core.userdetails.User.UserBuilder userBuilder = org.springframework.security.core.userdetails.User.withUsername(username);
-        userBuilder.password(user.getPassword());
-        userBuilder.roles(user.getRoles().stream().map(role -> role.getName()).toArray(String[]::new));
-
-        return userBuilder.build();
+        User principal = userRepository.findByUsername(username)
+                .orElseThrow(() -> {
+                    return new UsernameNotFoundException("해당 사용자를 찾을 수 없습니다" + username);
+                });
+        return new PrincipalDetail(principal); //시큐리티 세션에 유저 정보 저장
     }
 }

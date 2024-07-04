@@ -1,11 +1,15 @@
 package org.example.blog.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "posts")
 public class Post {
     @Id
@@ -27,7 +31,10 @@ public class Post {
     @Column(name = "is_published", nullable = false)
     private Boolean published = false;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "view_count")
+    private int viewCount;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
