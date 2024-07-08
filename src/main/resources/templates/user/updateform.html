@@ -78,6 +78,16 @@
             </div>
         </div>
 
+
+
+        <!-- Profile Image -->
+        <div class="form-group">
+            <label for="profileImage">Profile Image URL:</label>
+            <div class="input-group">
+                <input th:value="${#authentication.principal.profileImage}" type="text" class="form-control" id="profileImage" placeholder="Enter profile image URL" name="profileImage">
+            </div>
+        </div>
+
         <!-- Blog Title -->
         <div class="form-group">
             <label for="blogTitle">Blog Title:</label>
@@ -85,6 +95,7 @@
                 <input th:value="${#authentication.principal.blogTitle}" type="text" class="form-control" id="blogTitle" placeholder="Enter blog title" name="blogTitle">
             </div>
         </div>
+
         <!-- Bio -->
         <div class="form-group">
             <label for="bio">Bio:</label>
@@ -92,6 +103,7 @@
                 <input th:value="${#authentication.principal.bio}" type="text" class="form-control col-md-12" id="bio" placeholder="Enter bio" name="bio">
             </div>
         </div>
+
     </form>
     <button id="btn-update" class="btn btn-primary">회원 수정 완료</button>
 </div>
