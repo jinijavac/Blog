@@ -32,7 +32,7 @@
                 </a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="/user/updateform">설정</a>
-                    <a class="dropdown-item" href="#">블로그 이동</a>
+                    <a class="dropdown-item" href="/user/info">블로그 이동</a>
                     <a class="dropdown-item" href="#">임시저장글 목록 보기</a>
                     <a class="dropdown-item" href="/logout">로그아웃</a>
                 </div>
@@ -56,12 +56,11 @@
 
                 <!-- 텍스트를 한 줄로 제한합니다 -->
                 <p class="card-text" th:utext="${#strings.length(textOnly) > 100 ? #strings.substring(textOnly, 0, 50) + '...' : textOnly}"></p>
+                <p class="card-text"><small class="text-muted" th:text="${post.createdDate}">Post Date</small></p>
 
                 <!-- 상세 보기 버튼을 표시합니다 -->
                 <a th:href="@{/board/{id}(id=${post.id})}" class="btn btn-primary">상세 보기</a>
             </div>
-
-
 
 
 

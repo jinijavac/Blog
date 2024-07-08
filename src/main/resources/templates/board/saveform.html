@@ -106,13 +106,13 @@
                     alert(response); // 서버에서 반환한 메시지를 알림창으로 표시
                     location.href = "/"; // 성공 시 메인 페이지로 이동
                 })
-                .fail(function (error) {
-                    if (error.status === 500) {
-                        alert("서버 오류가 발생했습니다."); // 서버 오류 처리
-                    } else {
-                        alert("오류가 발생했습니다: " + error.responseText); // 기타 오류 처리
-                    }
-                });
+                // .fail(function (error) {
+                //     if (error.status === 500) {
+                //         alert("서버 오류가 발생했습니다."); // 서버 오류 처리
+                //     } else {
+                //         alert("오류가 발생했습니다: " + error.responseText); // 기타 오류 처리
+                //     }
+                // });
         }
     };
 

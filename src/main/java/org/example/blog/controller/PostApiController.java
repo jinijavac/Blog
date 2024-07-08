@@ -35,4 +35,9 @@ public class PostApiController {
         return ResponseEntity.ok("게시글이 삭제되었습니다.");
 
     }
+    @PutMapping("/api/board/{id}")
+    public ResponseEntity<String> updateId(@PathVariable Long id, @RequestBody Post post){
+        postService.updatepost(id, post);
+        return ResponseEntity.ok("글 수정이 완료되었습니다.");
+    }
 }

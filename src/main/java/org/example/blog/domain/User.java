@@ -40,7 +40,7 @@ public class User {
     private String bio;
 
     @Column(name = "blog_title", length = 255)
-    private String blogTitle;
+    private String blogTitle = username;
 
     @Column(name = "email_notification", nullable = false)
     private Boolean emailNotification = false;

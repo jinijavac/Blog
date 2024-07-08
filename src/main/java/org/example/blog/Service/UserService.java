@@ -42,5 +42,22 @@ public class UserService {
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
+    @Transactional
+    public void updateUser(User updateUser) {
+        User persistence = userRepository.findById(updateUser.getId())
+                .orElseThrow(() -> new IllegalArgumentException("회원 찾기 실패"));
+
+        // 이메일 업데이트
+        persistence.setEmail(updateUser.getEmail());
+
+        // 비밀번호 업데이트
+        if (updateUser.getPassword() != null && !updateUser.getPassword().isEmpty()) {
+            String rawPassword = updateUser.getPassword();
+            String encPassword = encoder.encode(rawPassword);
+            persistence.setPassword(encPassword);
+        }
+
+        userRepository.save(persistence); // 이 부분이 빠져있어서 저장이 되지 않을 수 있습니다.
+    }
 }
 

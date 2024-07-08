@@ -31,6 +31,8 @@ public class PostService {
     public List<Post> findAllPostsOrderBycreatedDateDesc() {
         return postRepository.findAllByOrderByCreatedDateDesc();
     }
+
+    @Transactional(readOnly = true)
     public Post postdetail(Long id){
         return postRepository.findById(id)
                 .orElseThrow(()->{
@@ -48,7 +50,18 @@ public class PostService {
             throw new IllegalArgumentException("해당 게시글이 존재하지 않습니다.");
         }
     }
+    @Transactional
+    public void updatepost(Long id, Post updatePost){
+        Post post = postRepository.findById(id)
+                    .orElseThrow(()->{
+                        return new IllegalArgumentException("글 상세보기 실패 : 아이디를 찾을 수 없음");
+                    });
+        post.setTitle(updatePost.getTitle());
+        post.setContent(updatePost.getContent());
+
+        }
 }
+
 
 
 
