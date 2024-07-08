@@ -50,5 +50,4 @@ public class PostController {
         model.addAttribute("post", postService.postdetail(id));
         return "board/updateform";
     }
-
 }

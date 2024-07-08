@@ -60,6 +60,9 @@ public class PostService {
         post.setContent(updatePost.getContent());
 
         }
+    public List<Post> findByUser(User user) {
+        return postRepository.findByUser(user);
+    }
 }
 
 
