@@ -42,6 +42,7 @@ public class UserService {
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
+
     @Transactional
     public void updateUser(User updateUser) {
         User persistence = userRepository.findById(updateUser.getId())
@@ -56,8 +57,15 @@ public class UserService {
             String encPassword = encoder.encode(rawPassword);
             persistence.setPassword(encPassword);
         }
+        persistence.setBlogTitle(updateUser.getBlogTitle());
+        persistence.setBio(updateUser.getBio());
+        persistence.setProfileImage(updateUser.getProfileImage());
 
         userRepository.save(persistence); // 이 부분이 빠져있어서 저장이 되지 않을 수 있습니다.
     }
-}
 
+    public User findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다. ID: " + id));
+    }
+}

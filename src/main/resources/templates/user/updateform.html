@@ -45,18 +45,24 @@
     <h2>회원 정보 수정</h2>
     <form id="update-form">
         <input type="hidden" id="id" th:value="${#authentication.principal.id}">
+
+        <!-- Username -->
         <div class="form-group">
             <label for="username">Username:</label>
             <div class="input-group">
                 <input th:value="${#authentication.principal.username}" type="text" class="form-control" id="username" placeholder="Enter username" name="username" readonly>
             </div>
         </div>
+
+        <!-- Password -->
         <div class="form-group">
             <label for="password">Password:</label>
             <div class="input-group">
                 <input type="password" class="form-control" id="password" placeholder="Enter new password" name="password">
             </div>
         </div>
+
+        <!-- Email -->
         <div class="form-group">
             <label for="email">Email:</label>
             <div class="input-group">
@@ -64,10 +70,32 @@
             </div>
         </div>
 
-        <button id="btn-update" class="btn btn-primary">회원 수정 완료</button>
-    </form>
-</div>
+        <!-- Bio -->
+        <div class="form-group">
+            <label for="bio">Bio:</label>
+            <div class="input-group">
+                <input th:value="${#authentication.principal.bio}" type="text" class="form-control" id="bio" placeholder="Enter bio" name="bio">
+            </div>
+        </div>
 
+        <!-- Profile Image -->
+        <div class="form-group">
+            <label for="profileImage">Profile Image URL:</label>
+            <div class="input-group">
+                <input th:value="${#authentication.principal.profileImage}" type="text" class="form-control" id="profileImage" placeholder="Enter profile image URL" name="profileImage">
+            </div>
+        </div>
+
+        <!-- Blog Title -->
+        <div class="form-group">
+            <label for="blogTitle">Blog Title:</label>
+            <div class="input-group">
+                <input th:value="${#authentication.principal.blogTitle}" type="text" class="form-control" id="blogTitle" placeholder="Enter blog title" name="blogTitle">
+            </div>
+        </div>
+    </form>
+    <button id="btn-update" class="btn btn-primary">회원 수정 완료</button>
+</div>
 <div class="jumbotron text-center" style="margin-bottom:0">
     <p>Created by Yujin</p>
     <p>010-5408-7492</p>
@@ -82,6 +110,7 @@
         init: function () {
             $("#btn-update").on("click", (event) => {
                 event.preventDefault(); // 폼이 자동으로 제출되는 것을 막기 위해 추가
+
                 console.log("버튼 클릭됨"); // 클릭 이벤트 확인
                 this.update();
             });
@@ -93,6 +122,9 @@
                 username: $("#username").val(),
                 password: $("#password").val(),
                 email: $("#email").val(),
+                bio: $("#bio").val(),
+                profileImage: $("#profileImage").val(),
+                blogTitle: $("#blogTitle").val()
             };
 
             console.log("전송 데이터:", data); // 전송 데이터 확인
@@ -103,7 +135,7 @@
                 data: JSON.stringify(data),
                 contentType: "application/json"
             })
-                .done(function(response) {
+                .done(function (response) {
                     console.log('AJAX 요청 성공:', response);
                     alert(response); // 서버에서 반환한 메시지를 알림창으로 표시
                     location.href = '/';
@@ -116,9 +148,9 @@
                         alert("오류가 발생했습니다: " + error.responseText); // 기타 오류 처리
                     }
                 });
-        }
-    };
+        },
 
+    }
     index.init();
 
 </script>
