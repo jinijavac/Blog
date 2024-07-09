@@ -15,10 +15,10 @@
 
         body {
             font-family: 'Roboto', sans-serif; /* 전체 글씨체 변경 */
-            background-color: #e8e8e8;
+            background-color: #f1f1f1;
             color: #333;
-            padding-left: 3rem; /* 양옆에 패딩 추가 */
-            padding-right: 3rem; /* 양옆에 패딩 추가 */
+            padding-left: 10rem; /* 양옆에 패딩 추가 */
+            padding-right: 10rem; /* 양옆에 패딩 추가 */
         }
 
         a {
@@ -30,7 +30,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #e8e8e8;
+            background-color: #f1f1f1;
             padding: 0.5rem 1rem;
             color: #000000;
         }
@@ -142,7 +142,7 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 최소 너비 250px로 최대 5열까지 자동 배치 */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 최소 너비 250px로 최대 5열까지 자동 배치 */
             gap: 1rem;
         }
 
@@ -160,7 +160,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 350px; /* 카드 높이를 동일하게 설정 */
+            height: 400px; /* 카드 높이를 동일하게 설정 */
             overflow: hidden; /* 카드의 내용이 넘치지 않도록 설정 */
         }
 
@@ -199,6 +199,7 @@
             object-fit: cover; /* 이미지를 컨테이너에 맞게 자름 */
             background-repeat: no-repeat; /* 이미지가 반복되지 않도록 설정 */
         }
+
         .card-footer {
             background-color: white;
             border-top: 1px solid #ddd; /* 푸터 위쪽에 선 추가 */
@@ -231,10 +232,10 @@
 <nav class="header">
     <a class="header" href="/">jini_log</a>
     <div class="navbar-nav">
-        <div class="nav-item" sec:authorize="isAnonymous()">
+        <div class="nav-item">
         <a href="#">🔔</a>
     </div>
-        <div class="nav-item" sec:authorize="isAnonymous()">
+        <div class="nav-item">
             <a href="#">🔍</a>
         </div>
         <div class="nav-item" sec:authorize="isAnonymous()">

@@ -15,12 +15,11 @@
 
         body {
             font-family: 'Roboto', sans-serif; /* 전체 글씨체 변경 */
-            background-color: #e8e8e8;
+            background-color: #ffffff;
             color: #333;
-            padding-left: 3rem; /* 양옆에 패딩 추가 */
-            padding-right: 3rem; /* 양옆에 패딩 추가 */
+            padding-left: 10rem; /* 양옆에 패딩 추가 */
+            padding-right: 10rem; /* 양옆에 패딩 추가 */
         }
-
         a {
             text-decoration: none;
             color: inherit;
@@ -30,16 +29,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #e8e8e8;
+            background-color: #ffffff;
             padding: 0.5rem 1rem;
-            color: #000000;
+            color: #000;
+
         }
 
         .header a.header {
             font-size: 1.4rem; /* 글씨 크기 조절 */
             font-weight: bold; /* 글씨 두께 조절 */
         }
-
 
         .navbar-nav {
             display: flex;
@@ -57,12 +56,9 @@
             border-radius: 20px;
             transition: background-color 0.3s;
         }
+
         .nav-link:hover {
             background-color: #838383;
-        }
-
-        .nav-item {
-            position: relative;
         }
 
         .nav-link.dropdown-toggle {
@@ -112,137 +108,191 @@
             background-color: #f1f1f1;
         }
 
-        .tabs {
-            display: flex;
-            justify-content: flex-start; /* 왼쪽으로 정렬 */
-            border-bottom: 1px solid #ddd;
-            margin-top: 1rem;
-        }
-
-        .tab {
-            padding: 0.7rem 1.2rem; /* 패딩 값을 줄여서 높이를 감소 */
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s, border-bottom 0.3s;
-            border-bottom: 3px solid transparent; /* 기본적으로 투명한 밑줄 */
-            font-weight: bold; /* 글씨 두껍게 */
-        }
-
-        .tab.active {
-            color: #000000;
-            border-bottom: 3px solid #282828; /* 트렌딩 탭 클릭 시 밑줄 */
-        }
-
-        .tab:not(.active):hover {
-            background-color: #f1f1f1;
-        }
-
         .container {
-            padding: 2rem;
+            margin-top: 2rem;
+            padding: 0 15rem;
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 최소 너비 250px로 3열 배치 */
-            gap: 1rem;
+        .profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            background-color: white;
+            padding: 5rem;
+            border-radius: 5px;
+            border-bottom: 2px solid #ddd; /* 프로필 밑에 선 추가 */
         }
 
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+            border: 1px solid #ececec;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-info h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-info p {
+            font-size: 1.1rem;
+            color: #666;
+        }
 
 
         .card {
-            position: relative;
-            padding: 1rem 1rem;
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            width: 100%; /* 카드 너비를 그리드 셀에 맞춤 */
+            width: 100%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 350px; /* 카드 높이를 동일하게 설정 */
-            overflow: hidden; /* 카드의 내용이 넘치지 않도록 설정 */
-        }
-
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            height: 270px; /* 카드 높이 고정 */
+            cursor: pointer; /* 커서 모양 변경 */
+            overflow: hidden; /* 넘치는 내용 숨기기 */
+            position: relative; /* 위치 설정 */
+            border-bottom: 1px solid #ddd; /* 카드 하단에 구분선 추가 */
+            padding: 0.5rem; /* 카드 전체 패딩 작게 설정 */
         }
 
         .card-body {
-            padding: 0; /* 상단 패딩 제거 */
+            padding: 1rem; /* 카드 내부 패딩 설정 */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             flex-grow: 1;
+            background-color: white; /* 배경색을 화이트로 설정 */
+            box-sizing: border-box; /* 패딩과 테두리를 포함한 크기 계산 */
         }
 
-        .card-title { /* 타이틀 패딩 설정: 상하 0.5rem, 좌우 1rem */
-            font-size: 1.25rem;
+        .card-title {
+            font-size: 0.7rem;
             font-weight: bold;
+            padding: 0.5rem 0;
         }
 
         .card-text {
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 0;
             color: #666;
         }
 
-        .card-img {
-            width: 100%; /* 이미지 너비를 카드에 맞춤 */
-            height: 150px; /* 모든 카드의 이미지 높이를 동일하게 설정 */
-            background-size: cover; /* 이미지를 자르지 않고 맞춤 */
-            background-position: center center; /* 이미지의 중앙을 기준으로 맞춤 */
-            border-radius: 10px 10px; /* 이미지의 윗부분만 라운드 적용 */
-            margin-bottom: 1rem; /* 이미지와 텍스트 사이에 간격 추가 */
-            overflow: hidden; /* 이미지가 넘치지 않도록 설정 */
-            object-fit: cover; /* 이미지를 컨테이너에 맞게 자름 */
-            background-repeat: no-repeat; /* 이미지가 반복되지 않도록 설정 */
-        }
         .card-footer {
-            background-color: white;
-            border-top: 1px solid #ddd; /* 푸터 위쪽에 선 추가 */
-            position: absolute; /* 카드의 맨 아래에 고정 */
-            bottom: 10px; /* 아래쪽에 붙임 */
-            left: 10px; /* 오른쪽 정렬 */
-            width: 100%; /* 카드의 너비에 맞게 설정 */
-            font-size: 15px;
-            font-weight: bold;
-            padding-top: 10px; /* 선과 푸터 사이 간격 설정 */
-            box-shadow: 0 0 0 10px white; /* 패딩 영역의 배경색을 흰색으로 설정 */
-            color: #6c6c6c;
-        }
-        .nav-link.dropdown-toggle {
-            background: none; /* 배경 제거 */
-            border: none; /* 테두리 제거 */
-            padding: 0; /* 패딩 제거 */
-            color: #333; /* 텍스트 색상 */
-            font-size: 1rem; /* 텍스트 크기 */
-            font-weight: normal; /* 텍스트 두께 */
-            transition: color 0.3s;
+            padding: 0.2rem 0; /* 위아래 패딩 추가 */
+            position: absolute; /* 절대 위치 */
+            bottom: 0; /* 하단에 고정 */
+            width: 100%; /* 카드 너비에 맞춤 */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white; /* 배경색을 화이트로 설정 */
+            font-size: 18px;
+
+
         }
 
+
+        .follow-info {
+            text-align: right; /* 오른쪽으로 정렬 */
+            padding-bottom: 5rem; /* 패딩 추가 */
+            font-size: 1.1rem; /* 글자 크기 */
+            color: #666; /* 글자 색상 */
+            font-weight: bold;
+
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center; /* 가운데 정렬 */
+            margin-bottom: 2rem;
+            background-color: #fff;
+            gap: 0.5rem; /* 탭 간격 좁히기 */
+
+        }
+
+        .tab {
+            padding: 1rem 1rem; /* 패딩 조정 */
+            cursor: pointer;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .tab:hover {
+            background-color: #f8f8f8;
+        }
+
+        .tab.active {
+            border-bottom: 4px solid #2fd7f6;
+        }
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .placeholder {
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #999;
+            font-size: 1.2rem;
+        }
+        @media (min-width: 768px) {
+            body {
+                font-size: 18px; /* 중간 화면 크기에서 글씨 크기 */
+            }
+            .card-title {
+                font-size: 1.6rem;
+            }
+            .card-text {
+                font-size: 1.1rem;
+            }
+            .card-footer {
+                font-size: 1rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            body {
+                font-size: 20px; /* 큰 화면 크기에서 글씨 크기 */
+            }
+            .card-title {
+                font-size: 1.8rem;
+            }
+            .card-text {
+                font-size: 1.2rem;
+            }
+            .card-footer {
+                font-size: 1.1rem;
+            }
+        }
 
     </style>
-
 </head>
 <body>
 
 <nav class="header">
     <a class="header" href="/">jini_log</a>
     <div class="navbar-nav">
-        <div class="nav-item" sec:authorize="isAnonymous()">
+        <div class="nav-item">
             <a href="#">🔔</a>
         </div>
-        <div class="nav-item" sec:authorize="isAnonymous()">
+        <div class="nav-item">
             <a href="#">🔍</a>
         </div>
         <div class="nav-item" sec:authorize="isAnonymous()">
             <a class="nav-link" href="/auth/loginform">로그인</a>
         </div>
-        <!--        <div class="nav-item" sec:authorize="isAnonymous()">-->
-        <!--            <a class="nav-link" href="/auth/joinform">회원가입</a>-->
-        <!--        </div>-->
         <div class="nav-item" sec:authorize="isAuthenticated()">
             <a class="nav-link" href="/board/saveform">새 글 작성</a>
         </div>
@@ -260,39 +310,77 @@
     </div>
 </nav>
 
-
-<div class="container mt-4">
-    <div class="row align-items-center">
-        <!-- 왼쪽: 프로필 사진 -->
-        <div class="col-md-3 text-center" th:if="${user.profileImage}">
-            <img th:src="${user.profileImage}" alt="프로필 사진" class="profile-image img-fluid mb-3">
-        </div>
-        <!-- 오른쪽: 타이틀과 바이오 -->
-        <div class="col-md-9">
-            <p class="mb-1 text-muted font-weight-light" th:text="${user.username} + '의 프로필'"></p>
-            <h2 class="text-black font-weight-bold mb-3" th:text="${user.blogTitle}"></h2>
+<div class="container">
+    <div class="profile">
+        <img th:src="${user.profileImage}" alt="프로필 사진" class="profile-image">
+        <div class="profile-info">
+            <p class="text-muted font-weight-light" th:text="${user.username} + '의 프로필'"></p>
+            <h2 th:text="${user.blogTitle}"></h2>
             <p class="lead text-muted" th:text="${user.bio}"></p>
         </div>
     </div>
-    <hr>
+    <p class="follow-info">0 팔로우  0 팔로워</p> <!-- 팔로우 정보 -->
 
-    <div class="row mt-4">
-        <div class="col-md-12">
-            <h4 class="font-weight-bold text-left text-black mt-4 mb-3">작성한 글</h4>
+    <!-- 탭 -->
+    <div class="tabs">
+        <div class="tab active" data-target="my-posts">글</div>
+        <div class="tab" data-target="series">시리즈</div>
+        <div class="tab" data-target="intro">소개</div>
+    </div>
 
+    <!-- 내가 쓴 글 섹션 -->
+    <div id="my-posts" class="section active">
+        <div class="posts">
             <div th:each="post : ${userPosts}">
-                <div class="card mb-3">
+                <div class="card" th:onclick="|location.href='@{/board/{id}(id=${post.id})}'|">
                     <div class="card-body">
-                        <h5 class="card-title" th:text="${post.title}"></h5>
-                        <p class="card-text" th:utext="${post.content}"></p>
-                        <p class="card-text"><small class="text-muted" th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm')}">작성일</small></p>
-                        <a th:href="@{/board/{id}(id=${post.id})}" class="btn btn-primary">자세히 보기</a>
+                        <div th:with="content=${post.content},
+                          textOnly=${content.replaceAll('<img[^>]*>', '').trim()},
+                          imagesOnly=${content.matches('.*<img[^>]*>.*') ? content.replaceAll('.*?(<img[^>]*>).*', '$1').trim() : ''}">
+                            <h4 class="card-title" th:text="${post.title}"></h4>
+                            <p class="card-text" th:utext="${textOnly}"></p>
+                            <div class="card-footer">
+                                <p class="card-text" th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm')}">작성일</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- 시리즈 섹션 -->
+    <div id="series" class="section">
+        <div class="placeholder">시리즈 내용이 없습니다</div>
+    </div>
+
+    <!-- 소개 섹션 -->
+    <div id="intro" class="section">
+        <div class="placeholder">소개 내용이 없습니다</div>
+    </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var tabs = document.querySelectorAll('.tab');
+        var sections = document.querySelectorAll('.section');
+
+        tabs.forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                // 모든 탭에서 active 클래스 제거
+                tabs.forEach(function(t) { t.classList.remove('active'); });
+                // 클릭된 탭에 active 클래스 추가
+                tab.classList.add('active');
+
+                // 모든 섹션 숨기기
+                sections.forEach(function(section) { section.classList.remove('active'); });
+                // 클릭된 탭의 타겟 섹션 보이기
+                var target = document.getElementById(tab.getAttribute('data-target'));
+                target.classList.add('active');
+            });
+        });
+    });
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var dropdownToggle = document.querySelector('.nav-link.dropdown-toggle');
@@ -313,5 +401,4 @@
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
 </body>
-
 </html>
