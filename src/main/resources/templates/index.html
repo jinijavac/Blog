@@ -1,84 +1,337 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velog Style Example</title>
+    <style>
+        /* 기본 스타일 초기화 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif; /* 전체 글씨체 변경 */
+            background-color: #e8e8e8;
+            color: #333;
+            padding-left: 3rem; /* 양옆에 패딩 추가 */
+            padding-right: 3rem; /* 양옆에 패딩 추가 */
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #e8e8e8;
+            padding: 0.5rem 1rem;
+            color: #000000;
+        }
+
+        .header a.header {
+            font-size: 1.4rem; /* 글씨 크기 조절 */
+            font-weight: bold; /* 글씨 두께 조절 */
+        }
+
+
+        .navbar-nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            background-color: #282828;
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+        .nav-link:hover {
+            background-color: #838383;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link.dropdown-toggle {
+            background: none; /* 배경 제거 */
+            border: none; /* 테두리 제거 */
+            padding: 0; /* 패딩 제거 */
+            color: #333; /* 텍스트 색상 */
+            cursor: pointer; /* 커서 모양 변경 */
+            font-size: 1rem; /* 텍스트 크기 */
+            font-weight: normal; /* 텍스트 두께 */
+            transition: color 0.3s;
+        }
+
+        .nav-link.dropdown-toggle:hover {
+            color: #007bff; /* 텍스트 색상 변경 */
+        }
+
+        .nav-link.dropdown-toggle::after {
+            content: ' ▼'; /* 드롭다운 화살표 추가 */
+            font-size: 0.8em;
+            margin-left: 5px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            z-index: 1;
+            right: 0; /* 오른쪽에 정렬 */
+            top: 100%; /* 아래로 펼쳐지게 설정 */
+            min-width: 200px; /* 최소 너비 설정 */
+            padding: 10px 0; /* 아이템 간격을 위한 상하 패딩 */
+        }
+
+        .dropdown-content .dropdown-item {
+            padding: 10px 20px; /* 패딩 추가 */
+            color: #333;
+            white-space: nowrap;
+            transition: background-color 0.3s;
+            display: block; /* 아이템들을 블록으로 배치 */
+        }
+
+        .dropdown-content .dropdown-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: flex-start; /* 왼쪽으로 정렬 */
+            border-bottom: 1px solid #ddd;
+            margin-top: 1rem;
+        }
+
+        .tab {
+            padding: 0.7rem 1.2rem; /* 패딩 값을 줄여서 높이를 감소 */
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s, border-bottom 0.3s;
+            border-bottom: 3px solid transparent; /* 기본적으로 투명한 밑줄 */
+            font-weight: bold; /* 글씨 두껍게 */
+        }
+
+        .tab.active {
+            color: #000000;
+            border-bottom: 3px solid #282828; /* 트렌딩 탭 클릭 시 밑줄 */
+        }
+
+        .tab:not(.active):hover {
+            background-color: #f1f1f1;
+        }
+
+        .container {
+            padding: 2rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 최소 너비 250px로 최대 5열까지 자동 배치 */
+            gap: 1rem;
+        }
+
+
+
+        .card {
+            position: relative;
+            padding: 1rem 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            width: 100%; /* 카드 너비를 그리드 셀에 맞춤 */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 350px; /* 카드 높이를 동일하게 설정 */
+            overflow: hidden; /* 카드의 내용이 넘치지 않도록 설정 */
+        }
+
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-body {
+            padding: 0; /* 상단 패딩 제거 */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+        }
+
+        .card-title { /* 타이틀 패딩 설정: 상하 0.5rem, 좌우 1rem */
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .card-text {
+            padding: 0.5rem 1rem;
+            color: #666;
+        }
+
+        .card-img {
+            width: 100%; /* 이미지 너비를 카드에 맞춤 */
+            height: 150px; /* 모든 카드의 이미지 높이를 동일하게 설정 */
+            background-size: cover; /* 이미지를 자르지 않고 맞춤 */
+            background-position: center center; /* 이미지의 중앙을 기준으로 맞춤 */
+            border-radius: 10px 10px; /* 이미지의 윗부분만 라운드 적용 */
+            margin-bottom: 1rem; /* 이미지와 텍스트 사이에 간격 추가 */
+            overflow: hidden; /* 이미지가 넘치지 않도록 설정 */
+            object-fit: cover; /* 이미지를 컨테이너에 맞게 자름 */
+            background-repeat: no-repeat; /* 이미지가 반복되지 않도록 설정 */
+        }
+        .card-footer {
+            background-color: white;
+            border-top: 1px solid #ddd; /* 푸터 위쪽에 선 추가 */
+            position: absolute; /* 카드의 맨 아래에 고정 */
+            bottom: 10px; /* 아래쪽에 붙임 */
+            left: 10px; /* 오른쪽 정렬 */
+            width: 100%; /* 카드의 너비에 맞게 설정 */
+            font-size: 15px;
+            font-weight: bold;
+            padding-top: 10px; /* 선과 푸터 사이 간격 설정 */
+            box-shadow: 0 0 0 10px white; /* 패딩 영역의 배경색을 흰색으로 설정 */
+            color: #6c6c6c;
+        }
+        .nav-link.dropdown-toggle {
+            background: none; /* 배경 제거 */
+            border: none; /* 테두리 제거 */
+            padding: 0; /* 패딩 제거 */
+            color: #333; /* 텍스트 색상 */
+            font-size: 1rem; /* 텍스트 크기 */
+            font-weight: normal; /* 텍스트 두께 */
+            transition: color 0.3s;
+        }
+
+
+    </style>
+
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-    <a class="navbar-brand" href="/">홈</a>
-    <!--    href : 링크-->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav">
-            <li class="nav-item" sec:authorize="isAnonymous()">
-                <a class="nav-link" href="/auth/loginform">로그인</a>
-            </li>
-            <li class="nav-item" sec:authorize="isAnonymous()">
-                <a class="nav-link" href="/auth/joinform">회원가입</a>
-            </li>
-
-            <li class="nav-item" sec:authorize="isAuthenticated()">
-                <a class="nav-link" href="/board/saveform">글 작성</a>
-            </li>
-            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-                <a class="nav-link dropdown-toggle" href="#" id="user-name" data-toggle="dropdown" sec:authentication="name">
-                    사용자 이름
-                </a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/user/updateform">설정</a>
-                    <a class="dropdown-item" href="user/info">블로그 이동</a>
-
-                    <a class="dropdown-item" href="#">임시저장글 목록 보기</a>
-                    <a class="dropdown-item" href="/logout">로그아웃</a>
-                </div>
-            </li>
-        </ul>
+<nav class="header">
+    <a class="header" href="/">jini_log</a>
+    <div class="navbar-nav">
+        <div class="nav-item" sec:authorize="isAnonymous()">
+        <a href="#">🔔</a>
     </div>
-</nav>
-<br>
-
-<div class="container" th:each="post : ${latestposts}">
-    <div class="card m-2">
-        <div class="card-body">
-            <div th:with="content=${post.content},
-              textOnly=${content.replaceAll('<img[^>]*>', '').trim()},
-              imagesOnly=${content.matches('.*<img[^>]*>.*') ? content.replaceAll('.*?(<img[^>]*>).*', '$1').trim() : ''}">
-                <!-- 이미지를 그대로 표시합니다 (이미지가 있는 경우에만) -->
-                <p class="card-text" th:if="${imagesOnly != ''}" th:utext="${imagesOnly}"></p>
-
-                <!-- 제목을 표시합니다 -->
-                <h4 class="card-title" th:text="${post.title}"></h4>
-
-                <!-- 텍스트를 한 줄로 제한합니다 -->
-                <p class="card-text" th:utext="${#strings.length(textOnly) > 100 ? #strings.substring(textOnly, 0, 50) + '...' : textOnly}"></p>
-                <p class="card-text"><small class="text-muted" th:text="${post.createdDate}">Post Date</small></p>
-
-                <!-- 상세 보기 버튼을 표시합니다 -->
-                <a th:href="@{/board/{id}(id=${post.id})}" class="btn btn-primary">상세 보기</a>
+        <div class="nav-item" sec:authorize="isAnonymous()">
+            <a href="#">🔍</a>
+        </div>
+        <div class="nav-item" sec:authorize="isAnonymous()">
+            <a class="nav-link" href="/auth/loginform">로그인</a>
+        </div>
+<!--        <div class="nav-item" sec:authorize="isAnonymous()">-->
+<!--            <a class="nav-link" href="/auth/joinform">회원가입</a>-->
+<!--        </div>-->
+        <div class="nav-item" sec:authorize="isAuthenticated()">
+            <a class="nav-link" href="/board/saveform">새 글 작성</a>
+        </div>
+        <div class="nav-item dropdown" sec:authorize="isAuthenticated()">
+            <a class="nav-link dropdown-toggle" href="#" id="user-name" sec:authentication="name">
+                사용자 이름
+            </a>
+            <div class="dropdown-content">
+                <a class="dropdown-item" href="/user/updateform">정보 수정</a>
+                <a class="dropdown-item" href="#">임시 글</a>
+                <a class="dropdown-item" href="/user/info">내 블로그 이동</a>
+                <a class="dropdown-item" href="/logout">로그아웃</a>
             </div>
-
-
-
         </div>
     </div>
+</nav>
+
+
+<div class="tabs">
+    <div class="tab active" id="trending-tab" onclick="showSection('trending')">🔥 트렌딩</div>
+    <div class="tab" id="latest-tab" onclick="showSection('latest')">🕒 최신</div>
 </div>
 
+<div class="container">
+    <div id="trending-posts" class="grid" style="display: none;">
+        <!-- 트렌딩 게시물은 여기 추가될 예정 -->
+    </div>
+    <div id="latest-posts" class="grid" th:classappend="${#strings.isEmpty(latestposts)} ? 'grid' : ''">
+        <!-- 최신 게시물이 있는 경우 -->
+        <div th:each="post : ${latestposts}">
+            <div class="card" th:onclick="|location.href='/board/${post.id}';|">
+                <div class="card-body">
+                    <div th:with="content=${post.content},
+                      textOnly=${content.replaceAll('<img[^>]*>', '').trim()},
+                      imagesOnly=${content.matches('.*<img[^>]*>.*') ? content.replaceAll('.*?(<img[^>]*>).*', '$1').trim() : ''}">
+                        <div class="card-img" th:if="${imagesOnly != ''}" th:utext="${imagesOnly}"></div>
+                        <h4 class="card-title" th:text="${post.title}"></h4>
+                        <p class="card-text" th:utext="${textOnly}"></p>
+                        <div class="card-footer">
+                            <p th:text="'by ' + ${post.user.username}">Post Username</p>
+                            <p>❤️ 0 </p>
 
-
-<div class="jumbotron text-center" style="margin-bottom:0">
-    <p>Created by Yujin</p>
-    <p>010-5408-7492</p>
-    <p>충청남도 천안시 XX동</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 최신 게시물이 없는 경우 -->
+        <p th:if="${#lists.isEmpty(latestposts)}">최신 게시물이 없습니다.</p>
+    </div>
 </div>
+<script>
+    function showSection(section) {
+        var trendingTab = document.getElementById('trending-tab');
+        var latestTab = document.getElementById('latest-tab');
+        var trendingPosts = document.getElementById('trending-posts');
+        var latestPosts = document.getElementById('latest-posts');
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+        if (section === 'trending') {
+            trendingTab.classList.add('active');
+            latestTab.classList.remove('active');
+            trendingPosts.style.display = 'grid';
+            latestPosts.style.display = 'none';
+        } else if (section === 'latest') {
+            trendingTab.classList.remove('active');
+            latestTab.classList.add('active');
+            trendingPosts.style.display = 'none';
+            latestPosts.style.display = 'grid';
+        }
+    }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var dropdownToggle = document.querySelector('.nav-link.dropdown-toggle');
+        var dropdownContent = document.querySelector('.dropdown-content');
+
+        dropdownToggle.addEventListener('click', function(event) {
+            event.preventDefault();
+            dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!dropdownToggle.contains(event.target) && !dropdownContent.contains(event.target)) {
+                dropdownContent.style.display = 'none';
+            }
+        });
+    });
+</script>
+
 </body>
 </html>

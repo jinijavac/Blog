@@ -1,80 +1,131 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Bootstrap Example</title>
+    <title>회원가입</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 스타일 초기화 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #e8e8e8;
+            color: #333;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 600px;
+            display: flex;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden; /* 이미지와 폼을 잘라내기 위해 필요 */
+            height: 400px; /* 높이 조정 */
+        }
+
+        .container .image-section {
+            width: 40%;
+            background: url('/images/loginjpg.jpg') no-repeat center center;
+            background-size: cover;
+        }
+
+        .container .form-section {
+            width: 60%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-section h2 {
+            font-size: 1.5rem; /* 제목 글씨 크기 줄이기 */
+            margin-bottom: 20px; /* 제목 아래에 여백 추가 */
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #282828;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #838383;
+        }
+
+        .signup-link {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #2f2f2f;
+            cursor: pointer;
+        }
+
+        .signup-link:hover {
+            text-decoration: underline;
+        }
+
+    </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-    <a class="navbar-brand" href="/">홈</a>
-    <!--    href : 링크-->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav">
-            <li class="nav-item" sec:authorize="isAnonymous()">
-                <a class="nav-link" href="/auth/loginform">로그인</a>
-            </li>
-            <li class="nav-item" sec:authorize="isAnonymous()">
-                <a class="nav-link" href="/auth/joinform">회원가입</a>
-            </li>
-
-            <li class="nav-item" sec:authorize="isAuthenticated()">
-                <a class="nav-link" href="/board/saveform">글 작성</a>
-            </li>
-            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-                <a class="nav-link dropdown-toggle" href="#" id="user-name" data-toggle="dropdown" sec:authentication="name">
-                    사용자 이름
-                </a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/user/updateform">설정</a>
-                    <a class="dropdown-item" href="#">블로그 이동</a>
-                    <a class="dropdown-item" href="#">임시저장글 목록 보기</a>
-                    <a class="dropdown-item" href="/logout">로그아웃</a>
-                </div>
-            </li>
-        </ul>
-    </div>
-</nav>
-<br>
 
 <div class="container">
-    <h2>회원가입</h2>
-    <form>
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <div class="input-group">
+    <div class="image-section"></div>
+    <div class="form-section">
+        <h2>📝 회원가입</h2>
+        <form>
+            <div class="form-group">
+                <label for="username">사용자 이름</label>
                 <input type="text" class="form-control" id="username" placeholder="Enter username" name="username">
             </div>
-        </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <div class="input-group">
+            <div class="form-group">
+                <label for="password">비밀번호</label>
                 <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
             </div>
-        </div>
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <div class="input-group">
+            <div class="form-group">
+                <label for="email">이메일</label>
                 <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
             </div>
-        </div>
-    </form>
-    <button id="btn-save" class="btn btn-primary">회원가입 완료</button>
-</div>
-<div class="jumbotron text-center" style="margin-bottom:0">
-    <p>Created by Yujin</p>
-    <p>010-5408-7492</p>
-    <p>충청남도 천안시 XX동</p>
+            <button type="button" id="btn-save">회원가입 완료</button>
+        </form>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     let index = {
         init: function () {
@@ -133,7 +184,7 @@
             $.ajax({
                 type: "POST",
                 url: "/auth/join",
-                data: JSON.stringify(data), // HTTP body
+                data: JSON.stringify(data),
                 contentType: "application/json",
             }).done(function (resp) {
                 alert(resp);
