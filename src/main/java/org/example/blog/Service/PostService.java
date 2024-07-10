@@ -9,6 +9,8 @@ import org.example.blog.domain.Comment;
 import org.example.blog.domain.Post;
 import org.example.blog.domain.Role;
 import org.example.blog.domain.User;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -100,6 +102,27 @@ public class PostService {
     public void deleteComment(Long commentId) {
         commentRepository.deleteById(commentId);
     }
+    public List<Post> searchPosts(String query) {
+        return postRepository.findByTitleContainingOrContentContaining(query, query);
+    }
+    public List<Post> searchByTitle(String title) {
+        return postRepository.findByTitleContaining(title);
+    }
+
+    public List<Post> searchByContent(String content) {
+        return postRepository.findByContentContaining(content);
+    }
+    public List<Post> searchByUserUsername(String username) {
+        return postRepository.findByUserUsernameContaining(username);
+    }
+    public void incrementViews(Long postId) {
+        postRepository.incrementViews(postId);
+    }
+    public List<Post> getTopTrendingPosts(int limit) {
+        Pageable pageable = PageRequest.of(0, limit);
+        return postRepository.findTopTrendingPosts(pageable);
+    }
+
 }
 
 

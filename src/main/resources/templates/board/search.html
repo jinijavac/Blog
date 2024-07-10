@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>검색</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<nav>
+    <!-- Your navigation bar here -->
+</nav>
+
+<div class="container">
+    <h1>검색</h1>
+    <form id="search-form" method="get" th:action="@{/search}">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="검색어를 입력하세요" name="query" id="search-query" th:value="${query}">
+            <select name="searchType" id="search-type" class="form-control">
+                <option value="title" th:selected="${searchType == 'title'}">제목</option>
+                <option value="content" th:selected="${searchType == 'content'}">내용</option>
+                <option value="user" th:selected="${searchType == 'user'}">사용자</option>
+            </select>
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">🔍</button>
+            </div>
+        </div>
+    </form>
+
+    <h2>검색 결과</h2>
+    <div th:if="${searchResults != null}">
+        <div th:if="${#lists.isEmpty(searchResults)}">
+            <p>검색 결과가 없습니다.</p>
+        </div>
+        <div th:each="post : ${searchResults}">
+            <div class="card" th:onclick="|location.href='/board/${post.id}';|">
+                <div class="card-body">
+                    <h4 class="card-title" th:text="${post.title}">Post Title</h4>
+                    <p class="card-text" th:text="${post.content}">Post Content</p>
+                    <div class="card-footer">
+                        <p th:text="'by ' + ${post.user.username}">Post Username</p>
+                        <p>❤️ 0 </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

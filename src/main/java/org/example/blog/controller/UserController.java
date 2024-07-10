@@ -56,4 +56,16 @@ public class UserController {
         // 다른 정보들도 필요하다면 추가할 수 있습니다.
         return "user/info";
     }
+    @GetMapping("/user/info/{id}")
+    public String userBlog(@PathVariable Long id, Model model) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다: " + id));
+        List<Post> userPosts = postService.findByUser(user);
+        Collections.reverse(userPosts);
+        model.addAttribute("user", user);
+        model.addAttribute("userPosts", userPosts);
+
+        // 다른 정보들도 필요하다면 추가할 수 있습니다.
+        return "user/info";
+    }
 }

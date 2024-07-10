@@ -241,7 +241,7 @@
         <a href="#">🔔</a>
     </div>
         <div class="nav-item">
-            <a href="#">🔍</a>
+            <a href="/search">🔍</a>
         </div>
         <div class="nav-item" sec:authorize="isAnonymous()">
             <a class="nav-link" href="/auth/loginform">로그인</a>
@@ -272,33 +272,50 @@
     <div class="tab" id="latest-tab" onclick="showSection('latest')">🕒 최신</div>
 </div>
 
+
 <div class="container">
-    <div id="trending-posts" class="grid" style="display: none;">
-        <!-- 트렌딩 게시물은 여기 추가될 예정 -->
-    </div>
-    <div id="latest-posts" class="grid" th:classappend="${#strings.isEmpty(latestposts)} ? 'grid' : ''">
-        <!-- 최신 게시물이 있는 경우 -->
-        <div th:each="post : ${latestposts}">
+    <div id="trending-posts" class="grid" th:classappend="${#lists.isEmpty(trendingPosts)} ? 'd-none' : ''">
+        <div th:each="post : ${trendingPosts}">
             <div class="card" th:onclick="|location.href='/board/${post.id}';|">
                 <div class="card-body">
                     <div th:with="content=${post.content},
-                      textOnly=${content.replaceAll('<img[^>]*>', '').trim()},
-                      imagesOnly=${content.matches('.*<img[^>]*>.*') ? content.replaceAll('.*?(<img[^>]*>).*', '$1').trim() : ''}">
+                          textOnly=${content.replaceAll('<img[^>]*>', '').trim()},
+                          imagesOnly=${content.matches('.*<img[^>]*>.*') ? content.replaceAll('.*?(<img[^>]*>).*', '$1').trim() : ''}">
                         <div class="card-img" th:if="${imagesOnly != ''}" th:utext="${imagesOnly}"></div>
                         <h4 class="card-title" th:text="${post.title}"></h4>
                         <p class="card-text" style="scale: inherit" th:utext="${textOnly}"></p>
                         <div class="card-footer">
                             <p th:text="'by ' + ${post.user.username}">Post Username</p>
                             <p>❤️ 0 </p>
-
                         </div>
+                        <p>조회수: <span th:text="${post.viewCount}">0</span></p>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- 최신 게시물이 없는 경우 -->
-        <p th:if="${#lists.isEmpty(latestposts)}">최신 게시물이 없습니다.</p>
     </div>
+    <div id="latest-posts" class="grid" th:classappend="${#lists.isEmpty(latestPosts)} ? 'd-none' : ''">
+        <div th:each="post : ${latestPosts}">
+            <div class="card" th:onclick="|location.href='/board/${post.id}';|">
+                <div class="card-body">
+                    <div th:with="content=${post.content},
+                          textOnly=${content.replaceAll('<img[^>]*>', '').trim()},
+                          imagesOnly=${content.matches('.*<img[^>]*>.*') ? content.replaceAll('.*?(<img[^>]*>).*', '$1').trim() : ''}">
+                        <div class="card-img" th:if="${imagesOnly != ''}" th:utext="${imagesOnly}"></div>
+                        <h4 class="card-title" th:text="${post.title}"></h4>
+                        <p class="card-text" style="scale: inherit" th:utext="${textOnly}"></p>
+                        <div class="card-footer">
+                            <p th:text="'by ' + ${post.user.username}">Post Username</p>
+                            <p>❤️ 0 </p>
+                        </div>
+                        <p>조회수: <span th:text="${post.viewCount}">0</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 최신 게시물이 없는 경우 -->
+    <p th:if="${#lists.isEmpty(latestPosts)}">최신 게시물이 없습니다.</p>
 </div>
 <script>
 </script>
