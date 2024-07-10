@@ -17,8 +17,8 @@
             font-family: 'Roboto', sans-serif; /* 전체 글씨체 변경 */
             background-color: #ffffff;
             color: #333;
-            padding-left: 10rem; /* 양옆에 패딩 추가 */
-            padding-right: 10rem; /* 양옆에 패딩 추가 */
+            padding-left: 5rem; /* 양옆에 패딩 추가 */
+            padding-right: 5rem; /* 양옆에 패딩 추가 */
         }
         a {
             text-decoration: none;
@@ -116,10 +116,10 @@
         .profile {
             display: flex;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 5rem;
             background-color: white;
             padding: 5rem;
-            border-radius: 5px;
+            border-radius: 1px;
             border-bottom: 2px solid #ddd; /* 프로필 밑에 선 추가 */
         }
 
@@ -137,7 +137,7 @@
         }
 
         .profile-info h2 {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
         }
@@ -150,10 +150,10 @@
 
         .card {
             width: 100%;
-            display: flex;
+            display: inherit;
             flex-direction: column;
             justify-content: space-between;
-            height: 270px; /* 카드 높이 고정 */
+            height: 200px; /* 카드 높이 고정 */
             cursor: pointer; /* 커서 모양 변경 */
             overflow: hidden; /* 넘치는 내용 숨기기 */
             position: relative; /* 위치 설정 */
@@ -172,7 +172,7 @@
         }
 
         .card-title {
-            font-size: 0.7rem;
+            font-size: 1.5rem;
             font-weight: bold;
             padding: 0.5rem 0;
         }
@@ -183,7 +183,7 @@
         }
 
         .card-footer {
-            padding: 0.2rem 0; /* 위아래 패딩 추가 */
+            padding: 0.1rem 0; /* 위아래 패딩 추가 */
             position: absolute; /* 절대 위치 */
             bottom: 0; /* 하단에 고정 */
             width: 100%; /* 카드 너비에 맞춤 */
@@ -218,7 +218,7 @@
         .tab {
             padding: 1rem 1rem; /* 패딩 조정 */
             cursor: pointer;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: bold;
             transition: background-color 0.3s;
             text-align: center;
@@ -247,35 +247,7 @@
             color: #999;
             font-size: 1.2rem;
         }
-        @media (min-width: 768px) {
-            body {
-                font-size: 18px; /* 중간 화면 크기에서 글씨 크기 */
-            }
-            .card-title {
-                font-size: 1.6rem;
-            }
-            .card-text {
-                font-size: 1.1rem;
-            }
-            .card-footer {
-                font-size: 1rem;
-            }
-        }
 
-        @media (min-width: 1024px) {
-            body {
-                font-size: 20px; /* 큰 화면 크기에서 글씨 크기 */
-            }
-            .card-title {
-                font-size: 1.8rem;
-            }
-            .card-text {
-                font-size: 1.2rem;
-            }
-            .card-footer {
-                font-size: 1.1rem;
-            }
-        }
 
     </style>
 </head>

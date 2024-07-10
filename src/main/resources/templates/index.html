@@ -17,8 +17,8 @@
             font-family: 'Roboto', sans-serif; /* 전체 글씨체 변경 */
             background-color: #f1f1f1;
             color: #333;
-            padding-left: 10rem; /* 양옆에 패딩 추가 */
-            padding-right: 10rem; /* 양옆에 패딩 추가 */
+            padding-left: 5rem; /* 양옆에 패딩 추가 */
+            padding-right: 5rem; /* 양옆에 패딩 추가 */
         }
 
         a {
@@ -142,8 +142,8 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 최소 너비 250px로 최대 5열까지 자동 배치 */
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit , minmax(275px, 1fr)); /* 최소 너비 250px로 최대 5열까지 자동 배치 */
+            gap: 1.5rem;
         }
 
 
@@ -160,7 +160,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 400px; /* 카드 높이를 동일하게 설정 */
+            height: 360px; /* 카드 높이를 동일하게 설정 */
             overflow: hidden; /* 카드의 내용이 넘치지 않도록 설정 */
         }
 
@@ -176,16 +176,20 @@
             flex-direction: column;
             justify-content: space-between;
             flex-grow: 1;
+
         }
 
         .card-title { /* 타이틀 패딩 설정: 상하 0.5rem, 좌우 1rem */
-            font-size: 1.25rem;
+            font-size: 1rem;
             font-weight: bold;
         }
 
         .card-text {
-            padding: 0.5rem 1rem;
-            color: #666;
+            text-overflow: ellipsis;
+            padding: 0.5rem 0.5rem;
+            color: #dedede;
+            /* 필요한 경우 높이와 라인 수를 제한하기 위해 추가 속성 사용 */
+            display: block;
         }
 
         .card-img {
@@ -193,7 +197,7 @@
             height: 150px; /* 모든 카드의 이미지 높이를 동일하게 설정 */
             background-size: cover; /* 이미지를 자르지 않고 맞춤 */
             background-position: center center; /* 이미지의 중앙을 기준으로 맞춤 */
-            border-radius: 10px 10px; /* 이미지의 윗부분만 라운드 적용 */
+            border-radius: 0px 0px; /* 이미지의 윗부분만 라운드 적용 */
             margin-bottom: 1rem; /* 이미지와 텍스트 사이에 간격 추가 */
             overflow: hidden; /* 이미지가 넘치지 않도록 설정 */
             object-fit: cover; /* 이미지를 컨테이너에 맞게 자름 */
@@ -206,13 +210,14 @@
             position: absolute; /* 카드의 맨 아래에 고정 */
             bottom: 10px; /* 아래쪽에 붙임 */
             left: 10px; /* 오른쪽 정렬 */
-            width: 100%; /* 카드의 너비에 맞게 설정 */
+            width: calc(100% - 20px); /* 카드의 너비에 맞게 설정 */
             font-size: 15px;
             font-weight: bold;
             padding-top: 10px; /* 선과 푸터 사이 간격 설정 */
             box-shadow: 0 0 0 10px white; /* 패딩 영역의 배경색을 흰색으로 설정 */
             color: #6c6c6c;
         }
+
         .nav-link.dropdown-toggle {
             background: none; /* 배경 제거 */
             border: none; /* 테두리 제거 */
@@ -281,7 +286,7 @@
                       imagesOnly=${content.matches('.*<img[^>]*>.*') ? content.replaceAll('.*?(<img[^>]*>).*', '$1').trim() : ''}">
                         <div class="card-img" th:if="${imagesOnly != ''}" th:utext="${imagesOnly}"></div>
                         <h4 class="card-title" th:text="${post.title}"></h4>
-                        <p class="card-text" th:utext="${textOnly}"></p>
+                        <p class="card-text" style="scale: inherit" th:utext="${textOnly}"></p>
                         <div class="card-footer">
                             <p th:text="'by ' + ${post.user.username}">Post Username</p>
                             <p>❤️ 0 </p>
@@ -295,6 +300,8 @@
         <p th:if="${#lists.isEmpty(latestposts)}">최신 게시물이 없습니다.</p>
     </div>
 </div>
+<script>
+</script>
 <script>
     function showSection(section) {
         var trendingTab = document.getElementById('trending-tab');

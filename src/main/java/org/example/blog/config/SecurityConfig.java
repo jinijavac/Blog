@@ -46,6 +46,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**", "/", "/js/**", "/images/**", "/css/**",  "/api/user/check-username","/api/user/check-email").permitAll()
                         .requestMatchers("/api/board").authenticated()
                         .anyRequest().authenticated()
+
                 )
 //                .formLogin(Customizer.withDefaults())
                 .formLogin(form -> form
@@ -65,6 +66,7 @@ public class SecurityConfig {
 
                 )
                 .csrf(csrf -> csrf.disable());
+
 
         return http.build();
     }

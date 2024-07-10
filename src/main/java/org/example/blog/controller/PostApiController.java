@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.blog.Repository.UserRepository;
 import org.example.blog.Service.PostService;
 import org.example.blog.Service.UserService;
+import org.example.blog.domain.Comment;
 import org.example.blog.domain.Post;
 import org.example.blog.domain.User;
 import org.example.blog.security.PrincipalDetail;
@@ -39,5 +40,21 @@ public class PostApiController {
     public ResponseEntity<String> updateId(@PathVariable Long id, @RequestBody Post post){
         postService.updatepost(id, post);
         return ResponseEntity.ok("글 수정이 완료되었습니다.");
+    }
+    @PostMapping("/api/board/{id}/comment")
+    public ResponseEntity<String> writeComment(@PathVariable("id") Long postId, @RequestBody Comment comment, @AuthenticationPrincipal PrincipalDetail principal) {
+        postService.writeComment(postId, comment, principal.getUser());
+        return ResponseEntity.ok("댓글 달기가 완료되었습니다.");
+    }
+
+    @PostMapping("/api/board/{postId}/comment/{parentCommentId}/reply")
+    public ResponseEntity<String> writeReplyComment(@PathVariable("postId") Long postId, @PathVariable("parentCommentId") Long parentCommentId, @RequestBody Comment comment, @AuthenticationPrincipal PrincipalDetail principal) {
+        postService.writeReplyComment(postId, parentCommentId, comment, principal.getUser());
+        return ResponseEntity.ok("대댓글 달기가 완료되었습니다.");
+    }
+    @DeleteMapping("/api/board/{postId}/comment/{commentId}")
+    public ResponseEntity<String> commentDelete(@PathVariable Long commentId){
+        postService.deleteComment(commentId);
+        return ResponseEntity.ok("댓글 삭제가 완료되었습니다.");
     }
 }

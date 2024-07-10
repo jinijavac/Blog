@@ -70,7 +70,29 @@
             <div th:utext="${post.content}">
             </div>
         </div>
+        <hr>
+        <div class="card">
+            <form>
+                <input type="hidden" id="postId" th:value="${post.id}">
 
+                <div class="card-body"><textarea id="comment-content" class="form-control" rows="1"></textarea></div>
+                <div class="card=footer"><button type="button" id="btn-comment-save" class="btn btn-primary">등록</button></div>
+            </form>
+        </div>
+        <br>
+        <div>
+            <h2>댓글</h2>
+            <ul id="comment-box" class="list-group">
+                <li class="list-group-item" th:each="comment : ${post.comments}">
+                    <div th:text="${comment.content}">댓글 내용</div>
+                    <div class="d-flex justify-content-between">
+                        <div class="font-italic" th:text="${comment.user.username}">작성자</div>
+                        <button class="btn btn-danger btn-sm" th:onclick="'index.commentDelete(' + ${post.id} + ',' + ${comment.id} + ')'">삭제</button>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
     </form>
 </div>
 
@@ -91,18 +113,22 @@
             $("#btn-delete").on("click", () => {
                 this.deleteById();
             });
-        },
-        deleteById: function () {
-            let id = $("#id").text(); // 이 부분에서 id 값을 올바르게 가져오는지 확인
+            $("#btn-comment-save").on("click", () => {
+                this.commentSave();
+            });
 
+        },
+
+        deleteById: function () {
+            let id = $("#id").text(); // 게시물의 id 값을 가져옴
 
             $.ajax({
-
                 type: "DELETE",
-                url: "/api/board/"+ id
+                url: "/api/board/" + id,
+                dataType: "json"
             })
                 .done(function (response) {
-                    alert(response); // 서버에서 반환한 메시지를 알림창으로 표시
+                    alert(response.message); // 서버에서 반환한 메시지를 알림창으로 표시
                     location.href = "/"; // 성공 시 메인 페이지로 이동
                 })
                 .fail(function (error) {
@@ -112,10 +138,55 @@
                         alert("오류가 발생했습니다: " + error.responseText); // 기타 오류 처리
                     }
                 });
+        },
+
+        commentSave: function () {
+            let data = {
+                content: $("#comment-content").val() // 댓글 내용을 가져옴
+            };
+            let postId = $("#postId").val(); // 게시물의 id 값을 가져옴
+            console.log(data);
+
+            $.ajax({
+                type: "POST",
+                url: `/api/board/${postId}/comment`,
+                data: JSON.stringify(data),
+                contentType: "application/json"
+            })
+                .done(function (response) {
+                    alert("댓글 작성을 완료하였습니다."); // 서버에서 반환한 메시지를 알림창으로 표시
+                    location.href = `/board/${postId}`; // 성공 시 페이지를 새로고침하여 댓글 목록을 업데이트
+                })
+                .fail(function (error) {
+                    if (error.status === 500) {
+                        alert("서버 오류가 발생했습니다."); // 서버 오류 처리
+                    } else {
+                        alert("오류가 발생했습니다: " + error.responseText); // 기타 오류 처리
+                    }
+                });
+        },
+        commentDelete: function (postId, commentId) {
+            $.ajax({
+                type: "DELETE",
+                url: `/api/board/${postId}/comment/${commentId}`,
+                dataType: "text"
+            })
+                .done(function (response) {
+                    alert("댓글이 삭제되었습니다.");
+                    location.reload(); // 페이지를 새로고침하여 댓글 목록을 업데이트
+                })
+                .fail(function (error) {
+                    if (error.status === 500) {
+                        alert("서버 오류가 발생했습니다.");
+                    } else {
+                        alert("오류가 발생했습니다: " + error.responseText);
+                    }
+                });
         }
-    };
+    }
 
     index.init();
+
 
 </script>
 </body>

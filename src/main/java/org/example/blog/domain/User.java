@@ -60,12 +60,4 @@ public class User {
     )
     private Set<Role> roles;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", roles=" + roles +
-                '}';
-    }
 }
