@@ -73,7 +73,7 @@
         }
 
         .nav-link.dropdown-toggle:hover {
-            color: #007bff; /* 텍스트 색상 변경 */
+            color: #000000; /* 텍스트 색상 변경 */
         }
 
         .nav-link.dropdown-toggle::after {
@@ -110,7 +110,23 @@
 
         .container {
             margin-top: 2rem;
-            padding: 0 15rem;
+            padding: 0 2rem; /* 기본 패딩 값 */
+
+            @media (min-width: 576px) {
+                padding: 0 4rem; /* 작은 화면에서는 패딩 값을 늘림 */
+            }
+
+            @media (min-width: 768px) {
+                padding: 0 8rem; /* 중간 화면에서는 패딩 값을 더 늘림 */
+            }
+
+            @media (min-width: 992px) {
+                padding: 0 12rem; /* 큰 화면에서는 패딩 값을 더 늘림 */
+            }
+
+            @media (min-width: 1200px) {
+                padding: 0 15rem; /* 더 큰 화면에서는 패딩 값을 최대값으로 설정 */
+            }
         }
 
         .profile {
@@ -153,7 +169,7 @@
             display: inherit;
             flex-direction: column;
             justify-content: space-between;
-            height: 200px; /* 카드 높이 고정 */
+            height: 250px; /* 카드 높이 고정 */
             cursor: pointer; /* 커서 모양 변경 */
             overflow: hidden; /* 넘치는 내용 숨기기 */
             position: relative; /* 위치 설정 */
@@ -172,7 +188,7 @@
         }
 
         .card-title {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: bold;
             padding: 0.5rem 0;
         }

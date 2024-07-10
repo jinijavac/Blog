@@ -34,7 +34,6 @@ public class PostApiController {
     public ResponseEntity<String> deleteById(@PathVariable Long id){
         postService.deletePost(id);
         return ResponseEntity.ok("게시글이 삭제되었습니다.");
-
     }
     @PutMapping("/api/board/{id}")
     public ResponseEntity<String> updateId(@PathVariable Long id, @RequestBody Post post){
@@ -47,11 +46,6 @@ public class PostApiController {
         return ResponseEntity.ok("댓글 달기가 완료되었습니다.");
     }
 
-    @PostMapping("/api/board/{postId}/comment/{parentCommentId}/reply")
-    public ResponseEntity<String> writeReplyComment(@PathVariable("postId") Long postId, @PathVariable("parentCommentId") Long parentCommentId, @RequestBody Comment comment, @AuthenticationPrincipal PrincipalDetail principal) {
-        postService.writeReplyComment(postId, parentCommentId, comment, principal.getUser());
-        return ResponseEntity.ok("대댓글 달기가 완료되었습니다.");
-    }
     @DeleteMapping("/api/board/{postId}/comment/{commentId}")
     public ResponseEntity<String> commentDelete(@PathVariable Long commentId){
         postService.deleteComment(commentId);

@@ -187,7 +187,7 @@
         .card-text {
             text-overflow: ellipsis;
             padding: 0.5rem 0.5rem;
-            color: #dedede;
+            color: #414141;
             /* 필요한 경우 높이와 라인 수를 제한하기 위해 추가 속성 사용 */
             display: block;
         }
@@ -268,7 +268,7 @@
 
 
 <div class="tabs">
-    <div class="tab active" id="trending-tab" onclick="showSection('trending')">🔥 트렌딩</div>
+    <div class="tab active" id="trending-tab" onclick="showSection('trending')">🔥 트랜딩</div>
     <div class="tab" id="latest-tab" onclick="showSection('latest')">🕒 최신</div>
 </div>
 
@@ -278,21 +278,22 @@
         <div th:each="post : ${trendingPosts}">
             <div class="card" th:onclick="|location.href='/board/${post.id}';|">
                 <div class="card-body">
+
                     <div th:with="content=${post.content},
                           textOnly=${content.replaceAll('<img[^>]*>', '').trim()},
                           imagesOnly=${content.matches('.*<img[^>]*>.*') ? content.replaceAll('.*?(<img[^>]*>).*', '$1').trim() : ''}">
                         <div class="card-img" th:if="${imagesOnly != ''}" th:utext="${imagesOnly}"></div>
                         <h4 class="card-title" th:text="${post.title}"></h4>
                         <p class="card-text" style="scale: inherit" th:utext="${textOnly}"></p>
-                        <div class="card-footer">
+                        <div class="card-footer" style="display: flex; justify-content: space-between;">
                             <p th:text="'by ' + ${post.user.username}">Post Username</p>
                             <p>❤️ 0 </p>
                         </div>
-                        <p>조회수: <span th:text="${post.viewCount}">0</span></p>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
     <div id="latest-posts" class="grid" th:classappend="${#lists.isEmpty(latestPosts)} ? 'd-none' : ''">
         <div th:each="post : ${latestPosts}">
@@ -308,7 +309,6 @@
                             <p th:text="'by ' + ${post.user.username}">Post Username</p>
                             <p>❤️ 0 </p>
                         </div>
-                        <p>조회수: <span th:text="${post.viewCount}">0</span></p>
                     </div>
                 </div>
             </div>
@@ -338,6 +338,9 @@
             latestPosts.style.display = 'grid';
         }
     }
+    document.addEventListener("DOMContentLoaded", function() {
+        showSection('trending');
+    });
 </script>
 
 <script>

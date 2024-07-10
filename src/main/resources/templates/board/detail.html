@@ -1,120 +1,403 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Bootstrap Example</title>
+    <title>Example</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif; /* 전체 글씨체 변경 */
+            background-color: #ffffff;
+            color: #333;
+            padding-left: 5rem; /* 양옆에 패딩 추가 */
+            padding-right: 5rem; /* 양옆에 패딩 추가 */
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 0.5rem 1rem;
+            color: #000;
+
+        }
+
+        .header a.header {
+            font-size: 1.4rem; /* 글씨 크기 조절 */
+            font-weight: bold; /* 글씨 두께 조절 */
+        }
+
+        .navbar-nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            background-color: #282828;
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: #838383;
+        }
+
+        .nav-link.dropdown-toggle {
+            background: none; /* 배경 제거 */
+            border: none; /* 테두리 제거 */
+            padding: 0; /* 패딩 제거 */
+            color: #333; /* 텍스트 색상 */
+            cursor: pointer; /* 커서 모양 변경 */
+            font-size: 1rem; /* 텍스트 크기 */
+            font-weight: normal; /* 텍스트 두께 */
+            transition: color 0.3s;
+        }
+
+        .nav-link.dropdown-toggle:hover {
+            color: #000000; /* 텍스트 색상 변경 */
+        }
+
+        .nav-link.dropdown-toggle::after {
+            content: ' ▼'; /* 드롭다운 화살표 추가 */
+            font-size: 0.8em;
+            margin-left: 5px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            z-index: 1;
+            right: 0; /* 오른쪽에 정렬 */
+            top: 100%; /* 아래로 펼쳐지게 설정 */
+            min-width: 200px; /* 최소 너비 설정 */
+            padding: 10px 0; /* 아이템 간격을 위한 상하 패딩 */
+        }
+
+        .dropdown-content .dropdown-item {
+            padding: 10px 20px; /* 패딩 추가 */
+            color: #333;
+            white-space: nowrap;
+            transition: background-color 0.3s;
+            display: block; /* 아이템들을 블록으로 배치 */
+        }
+
+        .dropdown-content .dropdown-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            color: #fff;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-1 {
+            width: 70px; /* 버튼의 너비를 동일하게 설정 */
+            height: 40px; /* 버튼의 높이를 동일하게 설정 */
+            display: inline-flex; /* 인라인 플렉스로 설정하여 중앙 정렬 */
+            justify-content: center; /* 수평으로 중앙 정렬 */
+            align-items: center; /* 수직으로 중앙 정렬 */
+            font-size: 16px; /* 글씨 크기 동일하게 설정 */
+            border: none; /* 테두리 제거 */
+            margin-right: 5px; /* 버튼 간 간격 추가 */
+            cursor: pointer; /* 커서 포인터로 변경 */
+            color: #000000; /* 글씨 색상 */
+            background-color: rgba(115, 115, 115, 0.4); /* 배경색 설정 */
+        }
+
+        .btn-1:hover {
+            background-color: #b9b9b9;
+        }
 
 
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+
+        .card {
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-info {
+            display: flex;
+            align-items: center; /* 수직 중앙 정렬 */
+            gap: 10px; /* 요소 간의 간격 */
+        }
+
+        .post-info p {
+            margin: 0; /* p 태그의 기본 마진 제거 */
+        }
+        .post-title {
+            font-size: 2rem; /* 폰트 크기 조절 */
+            padding: 1rem 0; /* 상하 패딩 추가 */
+        }
+        .post-content {
+            padding: 2rem 0; /* 패딩 추가 */
+            font-size: 1.2rem;
+        }
+        /* 댓글 폼과 등록 버튼 스타일링 */
+        .comment-form {
+            display: flex;
+            align-items: center;
+            border: none; /* 폼 바깥 테두리 제거 */
+
+        }
+
+        .comment-input {
+            flex-grow: 1;
+            margin-right: 0.5rem;
+        }
+
+        .btn-comment-save {
+            width: 70px; /* 버튼의 너비를 동일하게 설정 */
+            height: 40px; /* 버튼의 높이를 동일하게 설정 */
+            background-color: #2a2a2a;
+            color: white;
+            border: none;
+            padding: 0.2rem 0.2rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            justify-content: center; /* 수평으로 중앙 정렬 */
+            align-items: center; /* 수직으로 중앙 정렬 */
+
+        }
+
+        .btn-comment-save:hover {
+            background-color: #525252;
+        }
+        hr {
+            border: none; /* 기본 테두리 제거 */
+            height: 1px; /* 선 두께 */
+            background-color: #ddd; /* 선 색상 */
+            margin: 1rem 0; /* 위아래 여백 */
+        }
+        .comment-section-header {
+            padding: 10px 0;
+            font-size: 1.5rem;
+        }
+
+        .comment-form {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .comment-input {
+            flex: 1;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 5px;
+            margin-right: 0.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-comment-save {
+            background-color: #d3d3d3;
+            border: none;
+            color: #333;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-comment-save:hover {
+            background-color: #b0b0b0;
+        }
+
+        .comment-list {
+            list-style-type: none;
+            padding: 0;
+            border: none;
+        }
+
+        .comment-item {
+            padding: 0.5rem 0;
+
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.2rem;
+        }
+
+        .comment-author {
+            color: #2f2f2f;
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+            font-weight: bold;
+        }
+
+        .comment-content {
+            margin-left: 1rem;
+            font-size: 1rem;
+            color: #000000;
+
+        }
+
+        .btn-delete-comment {
+            border: none;
+            color: #000000;
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0);
+        }
+
+        .btn-delete-comment:hover {
+            background-color: #ffffff;
+        }
+
+
+
+
+    </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-    <a class="navbar-brand" href="/">홈</a>
-    <!--    href : 링크-->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav">
-            <li class="nav-item" sec:authorize="isAnonymous()">
-                <a class="nav-link" href="/auth/loginform">로그인</a>
-            </li>
-            <li class="nav-item" sec:authorize="isAnonymous()">
-                <a class="nav-link" href="/auth/joinform">회원가입</a>
-            </li>
-
-            <li class="nav-item" sec:authorize="isAuthenticated()">
-                <a class="nav-link" href="/board/saveform">글 작성</a>
-            </li>
-            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-                <a class="nav-link dropdown-toggle" href="#" id="user-name" data-toggle="dropdown" sec:authentication="name">
-                    사용자 이름
-                </a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/user/updateform">설정</a>
-                    <a class="dropdown-item" href="#">블로그 이동</a>
-                    <a class="dropdown-item" href="#">임시저장글 목록 보기</a>
-                    <a class="dropdown-item" href="/logout">로그아웃</a>
-                </div>
-            </li>
-        </ul>
+<nav class="header">
+    <a class="header" href="/">jini_log</a>
+    <div class="navbar-nav">
+        <div class="nav-item">
+            <a href="#">🔔</a>
+        </div>
+        <div class="nav-item">
+            <a href="#">🔍</a>
+        </div>
+        <div class="nav-item" sec:authorize="isAnonymous()">
+            <a class="nav-link" href="/auth/loginform">로그인</a>
+        </div>
+        <div class="nav-item" sec:authorize="isAuthenticated()">
+            <a class="nav-link" href="/board/saveform">새 글 작성</a>
+        </div>
+        <div class="nav-item dropdown" sec:authorize="isAuthenticated()">
+            <a class="nav-link dropdown-toggle" href="#" id="user-name" sec:authentication="name">
+                사용자 이름
+            </a>
+            <div class="dropdown-content">
+                <a class="dropdown-item" href="/user/updateform">정보 수정</a>
+                <a class="dropdown-item" href="#">임시 글</a>
+                <a class="dropdown-item" href="/user/info">내 블로그 이동</a>
+                <a class="dropdown-item" href="/logout">로그아웃</a>
+            </div>
+        </div>
     </div>
 </nav>
 
 <div class="container">
-    <form>
-        <!--        <button class="btn btn-secondary" onclick="history.back()">홈</button>-->
-        <a th:href="@{/board/{postId}/updateform(postId=${post.id})}"
-           class="btn btn-warning"
-           th:if="${#authentication.principal.username == post.user.username}">
-            수정
-        </a>
-        <button id="btn-delete" class="btn btn-danger" th:if="${#authentication.principal.username == post.user.username}">삭제</button>
 
-        <br/><br/>
+    <a th:href="@{/board/{postId}/updateform(postId=${post.id})}" class="btn btn-1"
+       th:if="${#authentication.principal.username == post.user.username}">
+        수정
+    </a>
+    <button type="button" id="btn-delete" class="btn btn-1" th:if="${#authentication.principal.username == post.user.username}">삭제</button>
 
-        <div>
-            글 번호 : <span id="id"><i th:text="${post.id}"></i> </span>
-            작성자 : <a th:href="@{/user/info/{id}(id=${post.user.id})}" th:text="${post.user.username}"></a>
-            <p>조회수: <span th:text="${post.viewCount}">0</span></p>
-        </div>
-        <br/>
-        <div>
-            <h3 th:text="${post.title}"></h3>
-        </div>
-        <hr>
-        <div>
-            <div th:utext="${post.content}">
-            </div>
-        </div>
-        <hr>
-        <div class="card">
-            <form>
-                <input type="hidden" id="postId" th:value="${post.id}">
-                <div class="card-body"><textarea id="comment-content" class="form-control" rows="1"></textarea></div>
-                <div class="card-footer"><button type="button" id="btn-comment-save" class="btn btn-primary">등록</button></div>
-            </form>
-        </div>
+    <br>
+
+    <br/>
+    <div>
+        <h3 class="post-title" th:text="${post.title}"></h3>
+    </div>
+    <div class="post-info">
+        글 번호 : <span  id = "id" th:text="${post.id}"> </span>
+        사용자 : <a th:href="@{/user/info/{id}(id=${post.user.id})}" th:text="${post.user.username}"></a>
+        <p> 조회수: <span th:text="${post.viewCount}">0</span></p>
         <br>
-        <div>
-            <h2>댓글</h2>
-            <ul id="comment-box" class="list-group">
-                <li class="list-group-item" th:each="comment : ${comments}">
-                    <div th:text="${comment.content}">댓글 내용</div>
-                    <div class="d-flex justify-content-between">
-                        <div class="font-italic" th:text="${comment.user.username}">작성자</div>
-                        <button class="btn btn-danger btn-sm"
-                                th:onclick="'index.commentDelete(' + ${post.id} + ',' + ${comment.id} + ')'"
-                                th:if="${#authentication.principal.username == comment.user.username}">삭제</button>
-                    </div>
-                </li>
-            </ul>
-            <div>
-                    <span th:if="${currentPage > 0}">
-                        <a th:href="@{|/board/${post.id}?page=${currentPage - 1}|}">Previous</a>
-                    </span>
-                <span th:if="${currentPage < totalPages - 1}">
-                        <a th:href="@{|/board/${post.id}?page=${currentPage + 1}|}">Next</a>
-                    </span>
-            </div>
+        <p th:text="${post.createdDate}"></p>
+    </div>
+    <div>
+        <div class="post-content" th:utext="${post.content}"></div>
+    </div>
+    <hr>
+    <h2 class="comment-section-header">
+        <span th:text="${post.comments.size()} + '개의 댓글'"></span>
+    </h2>
+    <div class="card">
+
+        <form class="comment-form">
+            <input type="hidden" id="postId" th:value="${post.id}">
+            <textarea id="comment-content" class="form-control comment-input" rows="1"></textarea>
+            <button type="button" id="btn-comment-save" class="btn btn-comment-save">등록</button>
+        </form>
+
+        <ul id="comment-box" class="comment-list">
+            <li class="comment-item" th:each="comment : ${comments}">
+                <div class="comment-header">
+                    <div class="comment-author" th:text="${comment.user.username}"></div>
+                    <button class="btn-delete-comment"
+                            th:onclick="'index.commentDelete(' + ${post.id} + ',' + ${comment.id} + ')'"
+                            th:if="${#authentication.principal.username == comment.user.username}">X</button>
+                </div>
+                <div class="comment-content" th:text="${comment.content}"></div>
+            </li>
+        </ul>
+            <span th:if="${currentPage > 0}">
+                <a th:href="@{|/board/${post.id}?page=${currentPage - 1}|}">Previous</a>
+            </span>
+            <span th:if="${currentPage < totalPages - 1}">
+                <a th:href="@{|/board/${post.id}?page=${currentPage + 1}|}">Next</a>
+            </span>
         </div>
-    </form>
-</div>
+    </div>
 
 
-
-<div class="jumbotron text-center" style="margin-bottom:0">
-    <p>Created by Yujin</p>
-    <p>010-5408-7492</p>
-    <p>충청남도 천안시 XX동</p>
-</div>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <script>
     let index = {
@@ -125,22 +408,27 @@
             $("#btn-comment-save").on("click", () => {
                 this.commentSave();
             });
-
         },
 
         deleteById: function () {
             let id = $("#id").text(); // 게시물의 id 값을 가져옴
+            console.log("Deleting post with ID: " + id); // 삭제할 ID 확인
+            console.log("Request URL: /api/board/" + id); // 요청 URL 확인
 
             $.ajax({
                 type: "DELETE",
                 url: "/api/board/" + id,
-                dataType: "json"
+                contentType: "application/json"
             })
                 .done(function (response) {
-                    alert(response.message); // 서버에서 반환한 메시지를 알림창으로 표시
+                    console.log("게시글이 삭제되었습니다.");
+                    alert(response); // 서버에서 반환한 메시지를 알림창으로 표시
                     location.href = "/"; // 성공 시 메인 페이지로 이동
                 })
                 .fail(function (error) {
+                    console.error("Error deleting post: ", error); // 에러 로그 출력
+                    console.error("Error status: ", error.status); // 상태 코드 출력
+                    console.error("Error responseText: ", error.responseText); // 응답 텍스트 출력
                     if (error.status === 500) {
                         alert("서버 오류가 발생했습니다."); // 서버 오류 처리
                     } else {
@@ -195,8 +483,6 @@
     }
 
     index.init();
-
-
 </script>
 </body>
 </html>

@@ -37,45 +37,33 @@ public class PostService {
         return postRepository.findAllByOrderByCreatedDateDesc();
     }
 
+
     @Transactional(readOnly = true)
     public Post postdetail(Long id) {
         return postRepository.findById(id)
-                .orElseThrow(() -> {
-                    return new IllegalArgumentException("글 상세보기 실패 : 아이디를 찾을 수 없음");
-                });
-
+                .orElseThrow(() -> new IllegalArgumentException("글 상세보기 실패 : 아이디를 찾을 수 없음"));
     }
 
     @Transactional
     public void deletePost(Long id) {
-        Optional<Post> post = postRepository.findById(id);
-        System.out.println("글삭제하기");
-        if (post.isPresent()) {
-            postRepository.deleteById(id);
-        } else {
-            throw new IllegalArgumentException("해당 게시글이 존재하지 않습니다.");
-        }
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+        postRepository.delete(post);
     }
+
 
     @Transactional
     public void updatepost(Long id, Post updatePost) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> {
-                    return new IllegalArgumentException("글 상세보기 실패 : 아이디를 찾을 수 없음");
-                });
+                .orElseThrow(() -> new IllegalArgumentException("글 상세보기 실패 : 아이디를 찾을 수 없음"));
         post.setTitle(updatePost.getTitle());
         post.setContent(updatePost.getContent());
-
     }
 
     public List<Post> findByUser(User user) {
         return postRepository.findByUser(user);
     }
 
-    public Post findById(Long id) {
-        Optional<Post> post = postRepository.findById(id);
-        return post.orElseThrow(() -> new RuntimeException("Post not found")); // 혹은 Optional이 비어있을 때 예외를 던지도록 설정할 수 있습니다.
-    }
     @Transactional
     public void writeComment(Long postId, Comment requestComment, User user){
         Post post = postRepository.findById(postId)
@@ -86,17 +74,6 @@ public class PostService {
         requestComment.setPost(post);
 
         commentRepository.save(requestComment);
-    }
-    @Transactional
-    public void writeReplyComment(Long postId, Long parentCommentId, Comment comment, User user) {
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + postId));
-        Comment parentComment = commentRepository.findById(parentCommentId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 없습니다. id=" + parentCommentId));
-        comment.setPost(post);
-        comment.setUser(user);
-        comment.setParentComment(parentComment);
-        commentRepository.save(comment);
     }
     @Transactional
     public void deleteComment(Long commentId) {
@@ -118,11 +95,10 @@ public class PostService {
     public void incrementViews(Long postId) {
         postRepository.incrementViews(postId);
     }
-    public List<Post> getTopTrendingPosts(int limit) {
-        Pageable pageable = PageRequest.of(0, limit);
+    public List<Post> getTopTrendingPosts() {
+        Pageable pageable = PageRequest.of(0, 50); // 페이지 크기 50으로 설정
         return postRepository.findTopTrendingPosts(pageable);
     }
-
 }
 
 

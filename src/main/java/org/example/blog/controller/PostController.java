@@ -33,7 +33,7 @@ public class PostController {
 
     @GetMapping("/")
     public String index(Model model) {
-        List<Post> trendingPosts = postService.getTopTrendingPosts(5);
+        List<Post> trendingPosts = postService.getTopTrendingPosts();
         List<Post> latestPosts = postService.findAllPostsOrderBycreatedDateDesc();
 
         model.addAttribute("trendingPosts", trendingPosts);
