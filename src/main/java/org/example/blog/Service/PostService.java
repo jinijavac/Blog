@@ -1,10 +1,7 @@
 package org.example.blog.Service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.blog.Repository.CommentRepository;
-import org.example.blog.Repository.PostRepository;
-import org.example.blog.Repository.RoleRepository;
-import org.example.blog.Repository.UserRepository;
+import org.example.blog.Repository.*;
 import org.example.blog.domain.Comment;
 import org.example.blog.domain.Post;
 import org.example.blog.domain.Role;
@@ -24,6 +21,7 @@ import java.util.Optional;
 public class PostService {
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
+    private final LikeRepository likeRepository;
 
     @Transactional
     public void savePost(Post post, User user) {
@@ -98,6 +96,16 @@ public class PostService {
     public List<Post> getTopTrendingPosts() {
         Pageable pageable = PageRequest.of(0, 50); // 페이지 크기 50으로 설정
         return postRepository.findTopTrendingPosts(pageable);
+    }
+
+    public long getLikeCount(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("게시물을 찾을 수 없습니다."));
+        return likeRepository.countByPost(post);
+    }
+    public Post getPostById(Long id) {
+        return postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("게시물을 찾을 수 없습니다."));
     }
 }
 

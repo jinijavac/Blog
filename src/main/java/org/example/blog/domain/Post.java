@@ -45,4 +45,8 @@ public class Post {
     @OrderBy("id desc")
     private Set<Comment> comments;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({"post"})
+    private Set<Like> likes;
+
 }
