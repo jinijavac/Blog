@@ -42,18 +42,20 @@ public class PostController {
         return "index"; // 메인 페이지 템플릿
     }
 
+
     @GetMapping("/board/{id}")
     public String viewPost(@PathVariable Long id,
                            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
                            Model model) {
         postService.incrementViews(id);
-        Post post = postService.postdetail(id);
+        Post post = postService.getPostById(id);
         Page<Comment> comments = commentService.getCommentsByPostId(id, page, 10);
 
         model.addAttribute("post", post);
         model.addAttribute("comments", comments.getContent());
         model.addAttribute("totalPages", comments.getTotalPages());
         model.addAttribute("currentPage", page);
+        model.addAttribute("likeCount", post.getLikes().size());
         return "board/detail"; // 게시물 상세 보기 페이지
     }
 

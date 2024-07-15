@@ -363,6 +363,8 @@
     <div>
         <div class="post-content" th:utext="${post.content}"></div>
     </div>
+    <button type="button" id="btn-like" class="btn btn-1">♥</button>
+    <p id="like-count" th:text="${likeCount} + ' 좋아요'"></p>
     <hr>
     <h2 class="comment-section-header">
         <span th:text="${post.comments.size()} + '개의 댓글'"></span>
@@ -407,6 +409,10 @@
             });
             $("#btn-comment-save").on("click", () => {
                 this.commentSave();
+            });
+            this.updateLikeButton();
+            $("#btn-like").on("click", () => {
+                this.toggleLike();
             });
         },
 
@@ -479,6 +485,52 @@
                         alert("오류가 발생했습니다: " + error.responseText);
                     }
                 });
+        },
+
+        toggleLike: function () {
+            let postId = $("#postId").val();
+            $.ajax({
+                type: "GET",
+                url: `/api/board/${postId}/isLiked`,
+                contentType: "application/json"
+            }).done(function (isLiked) {
+                if (isLiked) {
+                    $.ajax({
+                        type: "POST",
+                        url: `/api/board/${postId}/unlike`,
+                        contentType: "application/json"
+                    }).done(function () {
+                        $("#btn-like").text("♡");
+                        let likeCount = parseInt($("#like-count").text());
+                        $("#like-count").text((likeCount - 1) + " 좋아요");
+                    });
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: `/api/board/${postId}/like`,
+                        contentType: "application/json"
+                    }).done(function () {
+                        $("#btn-like").text("♥");
+                        let likeCount = parseInt($("#like-count").text());
+                        $("#like-count").text((likeCount + 1) + " 좋아요");
+                    });
+                }
+            });
+        },
+
+        updateLikeButton: function () {
+            let postId = $("#postId").val();
+            $.ajax({
+                type: "GET",
+                url: `/api/board/${postId}/isLiked`,
+                contentType: "application/json"
+            }).done(function (isLiked) {
+                if (isLiked) {
+                    $("#btn-like").text("♥");
+                } else {
+                    $("#btn-like").text("♡");
+                }
+            });
         }
     }
 
