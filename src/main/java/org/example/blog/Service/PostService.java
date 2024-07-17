@@ -98,11 +98,6 @@ public class PostService {
         return postRepository.findTopTrendingPosts(pageable);
     }
 
-    public long getLikeCount(Long postId) {
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("게시물을 찾을 수 없습니다."));
-        return likeRepository.countByPost(post);
-    }
     public Post getPostById(Long id) {
         return postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("게시물을 찾을 수 없습니다."));

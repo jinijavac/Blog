@@ -64,10 +64,6 @@ public class UserService {
         userRepository.save(persistence); // 이 부분이 빠져있어서 저장이 되지 않을 수 있습니다.
     }
 
-    public User findById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다. ID: " + id));
-    }
     public User findByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow(() -> new IllegalArgumentException("User not found"));
     }

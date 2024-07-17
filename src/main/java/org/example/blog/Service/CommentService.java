@@ -15,13 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentService {
     private final CommentRepository commentRepository;
-    public List<Comment> getCommentsByPost(Post post) {
-        return commentRepository.findByPost(post);
-    }
-
-    public Comment saveComment(Comment comment) {
-        return commentRepository.save(comment);
-    }
     public Page<Comment> getCommentsByPostId(Long postId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return commentRepository.findByPostId(postId, pageable);
