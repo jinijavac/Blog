@@ -300,6 +300,7 @@
 
 <div class="container">
     <div class="profile">
+        <p th:value="${user.id}"></p>
         <img th:src="${user.profileImage}" alt="프로필 사진" class="profile-image">
         <div class="profile-info">
             <p class="text-muted font-weight-light" th:text="${user.username} + '의 프로필'"></p>
@@ -307,7 +308,7 @@
             <p class="lead text-muted" th:text="${user.bio}"></p>
         </div>
     </div>
-    <p class="follow-info">0 팔로우  0 팔로워</p> <!-- 팔로우 정보 -->
+
 
     <!-- 탭 -->
     <div class="tabs">
@@ -369,23 +370,7 @@
         });
     });
 </script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var dropdownToggle = document.querySelector('.nav-link.dropdown-toggle');
-        var dropdownContent = document.querySelector('.dropdown-content');
 
-        dropdownToggle.addEventListener('click', function(event) {
-            event.preventDefault();
-            dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-        });
-
-        document.addEventListener('click', function(event) {
-            if (!dropdownToggle.contains(event.target) && !dropdownContent.contains(event.target)) {
-                dropdownContent.style.display = 'none';
-            }
-        });
-    });
-</script>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
 </body>

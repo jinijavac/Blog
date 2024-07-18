@@ -34,10 +34,10 @@
             <div class="card" th:onclick="|location.href='/board/${post.id}';|">
                 <div class="card-body">
                     <h4 class="card-title" th:text="${post.title}">Post Title</h4>
-                    <p class="card-text" th:text="${post.content}">Post Content</p>
+                    <p class="card-text" th:utext="${post.content}">Post Content</p>
                     <div class="card-footer">
                         <p th:text="'by ' + ${post.user.username}">Post Username</p>
-                        <p>❤️ 0 </p>
+                       <hr>
                     </div>
                 </div>
             </div>
